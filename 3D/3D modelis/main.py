@@ -15,20 +15,12 @@ def flower_petals(u, v):
     z = petal_scale * math.sin(u) * math.sin(v + angle_offset)
     return x, y, z
 
-def spiral(u, v):
-    spiral_radius = 0.2
-    spiral_height = 0.5
-    x = (spiral_radius + 0.1 * math.sin(10 * v)) * math.cos(u)
-    y = (spiral_radius + 0.1 * math.sin(10 * v)) * math.sin(u)
-    z = spiral_height * v / (2 * math.pi)
-    return x, y, z
-
 def calculate_color(vertex):
     z_min = -2.0  
-    z_max = 2.0   
+    z_max = 2.0  
     z = vertex[2]  
     blue = max(0, min(1, (z - z_min) / (z_max - z_min)))  
-    red = 1 - blue 
+    red = 1 - blue  
     green = 0.0  
     color = (red, green, blue)  
     return color
@@ -79,22 +71,7 @@ def main():
             faces.append((len(vertices) - 1, len(vertices) - 2, len(vertices) - 2 - flower_resolution))
             faces.append((len(vertices) - 1, len(vertices) - 2 - flower_resolution, len(vertices) - 1 - flower_resolution))
 
-    spiral_points = []
-    spiral_resolution = 300
-    for i in range(spiral_resolution):
-        u = 2 * math.pi * i / spiral_resolution
-        v = 2 * math.pi * random.random() 
-        spiral_points.append(spiral(u, v))
+    save_to_obj(vertices, faces, colors, 'dekoracija.obj')
 
-    for i in range(len(spiral_points)):
-        vertices.append(spiral_points[i])
-        colors.append((0.6, 0.8, 1.0))  
-        if i > 0:
-            faces.append((len(vertices) - 1, len(vertices) - 2, len(vertices) - 2 - spiral_resolution))
-            faces.append((len(vertices) - 1, len(vertices) - 2 - spiral_resolution, len(vertices) - 1 - spiral_resolution))
-
-    save_to_obj(vertices, faces, colors, 'coral_with_spiral_and_flowers.obj')
-
-
-if __name__ == "__main__":
+if _name_ == "_main_":
     main()
